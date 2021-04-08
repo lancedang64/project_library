@@ -48,3 +48,9 @@ let myLibrary = [];
 addBookToLibrary(firstBook);
 addBookToLibrary(secondBook);
 displayBookOnPage(myLibrary);
+
+/* To-do list
+- appendchild to the right side
+- create a BookCard Class ? 
+- formatted the bookCard so that its textContent has linebreak
+*/
