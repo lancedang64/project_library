@@ -20,23 +20,23 @@ function addBookToLibrary(book) {
 
 function displayBookOnPage(array) {
   array.forEach((book) => {
-    const bookCard = getBookCard(book);
-    bookCardsContainer.appendChild(bookCard);
+    const bookEntry = getBookEntry(book);
+    bookEntryTable.appendChild(bookEntry);
   });
 }
 
-function getBookCard(book) {
-  const bookCard = document.createElement("div");
-  bookCard.className = "bookCard";
-  bookCard.style.borderStyle = "solid";
-  bookCard.style.borderColor = "black";
-  bookCard.style.margin = "10px";
-  bookCard.style.padding = "5px";
-  bookCard.textContent = book.info();
-  return bookCard;
+function getBookEntry(book) {
+  const bookEntry = document.createElement("div");
+  bookEntry.className = "bookEntry";
+  bookEntry.style.borderStyle = "solid";
+  bookEntry.style.borderColor = "black";
+  bookEntry.style.margin = "10px";
+  bookEntry.style.padding = "5px";
+  bookEntry.textContent = book.info();
+  return bookEntry;
 }
 
-const bookCardsContainer = document.getElementById("bookCardsContainer");
+const bookEntryTable = document.getElementById("bookEntryTable");
 const firstBook = new Book("The Hobbit", "J.R.R. Tolkien", 295, false);
 const secondBook = new Book("Harry Porter", "J.K. Rowling", 450, true);
 
@@ -47,7 +47,5 @@ addBookToLibrary(secondBook);
 displayBookOnPage(myLibrary);
 
 /* To-do list
-- appendchild to the right side
-- create a BookCard Class ? 
-- formatted the bookCard so that its textContent has linebreak
+- create a BookEntry Class, change UI to a table instead 
 */
