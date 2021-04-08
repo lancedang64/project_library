@@ -1,7 +1,5 @@
 "use strict";
 
-let myLibrary = [];
-
 class Book {
     constructor(title, author, pages, isRead) {
         this.title = title;
@@ -10,7 +8,7 @@ class Book {
         this.isRead = isRead;
         this.info = function () {
             let readStatus = isRead ? "has been read" : "not read yet";
-            const info = `${title}  by ${author}, ${pages} pages, ${readStatus}`;
+            const info = `${title} by ${author}, ${pages} pages, ${readStatus}`;
             return info;
         };
     }
@@ -30,11 +28,12 @@ function displayBookOnPage(array) {
 function getBookCard(book) {
   const bookCard = document.createElement("div");
   bookCard.className = "bookCard";
-  bookCard.style.fontSize = "10px";
+  bookCard.style.fontSize = "30px";
   bookCard.style.borderStyle = "solid";
   bookCard.style.borderColor = "black";
   bookCard.style.margin = "10px";
   bookCard.style.padding = "5px";
+  bookCard.style.width = "200px";
 
   bookCard.textContent = book.info();
   return bookCard;
@@ -43,6 +42,8 @@ function getBookCard(book) {
 const bookCardsContainer = document.getElementById("bookCardsContainer");
 const firstBook = new Book("The Hobbit", "J.R.R. Tolkien", 295, false);
 const secondBook = new Book("Harry Porter", "J.K. Rowling", 450, true);
+
+let myLibrary = [];
 
 addBookToLibrary(firstBook);
 addBookToLibrary(secondBook);

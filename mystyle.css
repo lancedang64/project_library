@@ -1,3 +1,7 @@
 body {
     background-color: antiquewhite;
 }
+
+#bookCardsContainer {
+    background-color:rgb(104, 221, 182);
+}
