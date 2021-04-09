@@ -44,7 +44,7 @@ let myLibrary = [];
 
 addBookToLibrary(firstBook);
 addBookToLibrary(secondBook);
-displayBookOnPage(myLibrary);
+//displayBookOnPage(myLibrary);
 
 /* To-do list
 - create a BookEntry Class, change UI to a table instead 

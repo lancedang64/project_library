@@ -6,11 +6,37 @@ body {
 .content {
   max-width: 1000px;
   min-height: 700px;
-  margin: auto;
+  margin: 100px auto;
+  padding: 80px 100px;
   background: white;
+}
+
+.container {
+  display: grid;
+  grid-template-columns: 3fr 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+}
+
+form.container > p,input {
+  margin: 0 10px;
+  padding: 10px 0;
+}
+
+#bookEntryTable {
+  background-color: rgb(104, 221, 182);
+}
+
+
+table, th ,td {
+  border: 1px solid black;
   padding: 10px;
 }
 
-#bookCardsContainer {
-  background-color: rgb(104, 221, 182);
+table {
+  width: 100%;
+}
+
+th {
+  text-align: left;
+  background-color: khaki;
 }
