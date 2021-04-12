@@ -18,19 +18,36 @@ function addBookToLibrary(book) {
 
 function addBookToDisplay(book) {
   const newTableRow = document.createElement("tr");
-  const bookArray = book.getBookInfo();
-  bookArray.forEach((info) => {
+  newTableRow.id = book.title;
+  const bookInfoArray = book.getBookInfo();
+  bookInfoArray.forEach(info => {
     const newTableData = document.createElement("td");
     if (info == "READ" || info == "NOT READ") {
-      const newReadButton = document.createElement("button");
-      newReadButton.textContent = info;
-      newTableData.appendChild(newReadButton);
+      newTableData.appendChild(getReadStatusButton(info));
     } else {
       newTableData.textContent = info;
     }
     newTableRow.appendChild(newTableData);
   });
+  newTableRow.appendChild(getDeleteButtonCell(book.title));
   bookTable.appendChild(newTableRow);
+}
+
+function getDeleteButtonCell(title) {
+  const tdElement = document.createElement("td");
+  const button = document.createElement("button");
+  button.id = "delete-" + title;
+  button.textContent = "DELETE";
+  button.addEventListener("click", deleteBook);
+  tdElement.appendChild(button);
+  return tdElement;
+}
+
+function getReadStatusButton(info) {
+  const button = document.createElement("button");
+  button.textContent = info;
+  // Add event listener
+  return button;
 }
 
 function submitNewBook() {
@@ -46,19 +63,25 @@ function submitNewBook() {
   addBookToDisplay(newBook);
 }
 
+function deleteBook(e) {
+  const title = e.target.id.slice(7);
+  const updatedLibrary = myLibrary.filter(book => book.title = title);
+  myLibrary = updatedLibrary;
+  const bookTableRow = document.getElementById(title);
+  bookTableRow.remove();
+}
+
+function testFunc() {console.log("Hi");}
+
 const bookTable = document.getElementById("book-table");
 const firstBook = new Book("The Hobbit", "J.R.R. Tolkien", 295, "READ");
-const secondBook = new Book("Harry Porter", "J.K. Rowling", 450, "NOT READ");
-
 let myLibrary = [];
 
 const submitButton = document.getElementById("submit-button");
 submitButton.addEventListener("click", submitNewBook);
 
-addBookToLibrary(firstBook);
-addBookToLibrary(secondBook);
-
-myLibrary.forEach((book) => addBookToDisplay(book));
+addBookToDisplay(firstBook);
 
 /* To-do list
-*/
+- Throw confirmation for delete function
+ */
