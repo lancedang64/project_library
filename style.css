@@ -18,6 +18,7 @@ form {
 
 form > label {
   margin: 5px 10px;
+  font-size: 23px;
 }
 
 form > input {
@@ -29,10 +30,9 @@ form > #submit-button {
   width: 150px;
 }
 
-table,
 th,
 td {
-  border: 1px solid black;
+  border-bottom: 1px solid black;
   padding: 10px;
 }
 
@@ -42,5 +42,5 @@ table {
 
 th {
   text-align: left;
-  background-color: khaki;
+  font-size: 20px;
 }
