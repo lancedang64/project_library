@@ -7,7 +7,7 @@ class Book {
     this.pages = pages;
     this.isRead = isRead;
     this.getBookInfo = function () {
-      let readStatus = isRead ? "Read" : "Not read yet";
+      let readStatus = isRead ? "READ" : "NOT READ";
       return [title, author, pages, readStatus];
     };
   }
@@ -20,9 +20,15 @@ function addBookToLibrary(book) {
 function appendBookToTable(book) {
   const newTableRow = document.createElement("tr");
   const bookArray = book.getBookInfo();
-  bookArray.forEach(info => {
+  bookArray.forEach((info) => {
     const newTableData = document.createElement("td");
-    newTableData.textContent = info;
+    if (info == "READ" || info == "NOT READ") {
+      const newReadButton = document.createElement("button");
+      newReadButton.textContent = info;
+      newTableData.appendChild(newReadButton);
+    } else {
+      newTableData.textContent = info;
+    }
     newTableRow.appendChild(newTableData);
   });
   bookTable.appendChild(newTableRow);
@@ -37,7 +43,7 @@ let myLibrary = [];
 addBookToLibrary(firstBook);
 addBookToLibrary(secondBook);
 
-myLibrary.forEach(book => appendBookToTable(book));
+myLibrary.forEach((book) => appendBookToTable(book));
 
 /* To-do list
 - create a BookEntry Class, change UI to a table instead 
