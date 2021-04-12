@@ -1,13 +1,12 @@
 "use strict";
 
 class Book {
-  constructor(title, author, pages, isRead) {
+  constructor(title, author, pages, readStatus) {
     this.title = title;
     this.author = author;
     this.pages = pages;
-    this.isRead = isRead;
+    this.readStatus = readStatus;
     this.getBookInfo = function () {
-      let readStatus = isRead ? "READ" : "NOT READ";
       return [title, author, pages, readStatus];
     };
   }
@@ -17,7 +16,7 @@ function addBookToLibrary(book) {
   myLibrary.push(book);
 }
 
-function appendBookToTable(book) {
+function addBookToDisplay(book) {
   const newTableRow = document.createElement("tr");
   const bookArray = book.getBookInfo();
   bookArray.forEach((info) => {
@@ -34,17 +33,32 @@ function appendBookToTable(book) {
   bookTable.appendChild(newTableRow);
 }
 
+function submitNewBook() {
+  const title = document.getElementById("title").value;
+  const author = document.getElementById("author").value;
+  const pages = document.getElementById("pages").value;
+  let readStatus;
+  if (document.getElementById("read").checked) readStatus = "READ";
+  else readStatus = "NOT READ";
+
+  const newBook = new Book(title, author, pages, readStatus);
+  addBookToLibrary(newBook);
+  addBookToDisplay(newBook);
+}
+
 const bookTable = document.getElementById("book-table");
-const firstBook = new Book("The Hobbit", "J.R.R. Tolkien", 295, false);
-const secondBook = new Book("Harry Porter", "J.K. Rowling", 450, true);
+const firstBook = new Book("The Hobbit", "J.R.R. Tolkien", 295, "READ");
+const secondBook = new Book("Harry Porter", "J.K. Rowling", 450, "NOT READ");
 
 let myLibrary = [];
+
+const submitButton = document.getElementById("submit-button");
+submitButton.addEventListener("click", submitNewBook);
 
 addBookToLibrary(firstBook);
 addBookToLibrary(secondBook);
 
-myLibrary.forEach((book) => appendBookToTable(book));
+myLibrary.forEach((book) => addBookToDisplay(book));
 
 /* To-do list
-- create a BookEntry Class, change UI to a table instead 
 */
