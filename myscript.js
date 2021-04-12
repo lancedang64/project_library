@@ -65,7 +65,7 @@ function submitNewBook() {
 
 function deleteBook(e) {
   const title = e.target.id.slice(7);
-  const updatedLibrary = myLibrary.filter(book => book.title = title);
+  const updatedLibrary = myLibrary.filter(book => book.title != title);
   myLibrary = updatedLibrary;
   const bookTableRow = document.getElementById(title);
   bookTableRow.remove();
