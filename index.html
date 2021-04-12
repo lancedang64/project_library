@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <title>Lance's Library</title>
     <link rel="shortcut icon" href="favicon.ico" />
-    <link rel="stylesheet" href="mystyle.css" />
+    <link rel="stylesheet" href="style.css" />
   </head>
 
   <body>
@@ -16,19 +16,25 @@
         library.
       </p>
       <br>
-      <form class="container">
-          <p>Book Title</p>
-          <p>Author</p>
-          <p>Pages</p>
-          <p>Status</p>
-          <input type="text"></input>
-          <input type="text"></input>
-          <input type="text"></input>
-          <input type="checkbox"></input>
+      <form>
+          <label for='title'>Book Title</label>
+          <label for='author'l>Author</label>
+          <label for='pages'>Pages</label>
+          <label for='status'>Status</label>
+          <input type="text" id='title' name='title'></input>
+          <input type="text" id='author' name='author'></input>
+          <input type="number" id='pages' name='pages'></input>
+          <div>
+            <input type="radio" id='read' name='status' value='read'></input>
+            <label for='read'>Read</label><br>
+            <input type="radio" id='not-read' name='status' value='not-read'></input>
+            <label for="not-read">Not read</label>
+          </div>
+          <input type="submit" id="submit-button" value="Submit">
       </form>
       <br>
       <br>
-      <table>
+      <table id="book-table">
         <colgroup span="4"></colgroup>
         <tr>
           <th>Book Title</th>
@@ -43,7 +49,6 @@
           <td>Read</td>
         </tr>
       </table>
-      <div id="bookEntryTable"></div>
       <script src="myscript.js"></script>
     </div>
   </body>
