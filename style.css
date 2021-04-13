@@ -1,5 +1,5 @@
 body {
-  background-color: antiquewhite;
+  background-image: url('background-image.jpg');
   font-family: Tahoma, Geneva, sans-serif;
 }
 
@@ -9,6 +9,9 @@ body {
   margin: 100px auto;
   padding: 80px 100px;
   background: white;
+  opacity: 93%;
+  border: solid 10px rgb(93, 51, 11);
+  border-radius: 80px;
 }
 
 form {
@@ -18,7 +21,7 @@ form {
 
 form > label {
   margin: 5px 10px;
-  font-size: 23px;
+  font-size: 20px;
 }
 
 form > input {
@@ -43,4 +46,13 @@ table {
 th {
   text-align: left;
   font-size: 20px;
+}
+
+button {
+  font-size: 16px;
+  font-family: Tahoma, Geneva, sans-serif;
+}
+
+.button-delete {
+  background-color: rgb(228, 128, 128);
 }

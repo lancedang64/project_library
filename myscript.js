@@ -37,6 +37,7 @@ function getDeleteButtonCell(title) {
   const tdElement = document.createElement("td");
   const button = document.createElement("button");
   button.id = "delete-" + title;
+  button.className = "button-delete";
   button.textContent = "DELETE";
   button.addEventListener("click", deleteBook);
   tdElement.appendChild(button);
