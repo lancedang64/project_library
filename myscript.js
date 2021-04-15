@@ -20,7 +20,7 @@ function addBookToDisplay(book) {
   const newTableRow = document.createElement("tr");
   newTableRow.id = book.title;
   const bookInfoArray = book.getBookInfo();
-  bookInfoArray.forEach(info => {
+  bookInfoArray.forEach((info) => {
     const newTableData = document.createElement("td");
     if (info == "READ" || info == "NOT READ") {
       newTableData.appendChild(getReadStatusButton(info));
@@ -66,13 +66,15 @@ function submitNewBook() {
 
 function deleteBook(e) {
   const title = e.target.id.slice(7);
-  const updatedLibrary = myLibrary.filter(book => book.title != title);
+  const updatedLibrary = myLibrary.filter((book) => book.title != title);
   myLibrary = updatedLibrary;
   const bookTableRow = document.getElementById(title);
   bookTableRow.remove();
 }
 
-function testFunc() {console.log("Hi");}
+function testFunc() {
+  console.log("Hi");
+}
 
 const bookTable = document.getElementById("book-table");
 const firstBook = new Book("The Hobbit", "J.R.R. Tolkien", 295, "READ");
@@ -87,6 +89,4 @@ addBookToDisplay(firstBook);
 - Throw confirmation for delete function
 - Require user to fill in blank text field
 - Read -> Not Read button for entries
-- Calibri text font instead
-- increase opacity
  */

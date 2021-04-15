@@ -1,6 +1,16 @@
 body {
-  background-image: url('background-image.jpg');
-  font-family: Tahoma, Geneva, sans-serif;
+  background-image: url("background-image.jpg");
+  font-family: Calibri, Candara, Segoe, "Segoe UI", Optima, Arial, sans-serif;
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 20px;
+}
+
+h1 {
+  font-family: Calibri, Candara, Segoe, "Segoe UI", Optima, Arial, sans-serif;
+  font-size: 40px;
+  font-weight: 700;
+  line-height: 26.4px;
 }
 
 .content {
@@ -9,8 +19,8 @@ body {
   margin: 100px auto;
   padding: 80px 100px;
   background: white;
-  opacity: 93%;
-  border: solid 10px rgb(93, 51, 11);
+  opacity: 96%;
+  border: solid 10px rgba(172, 86, 5, 0.548);
   border-radius: 80px;
 }
 
@@ -27,6 +37,12 @@ form > label {
 form > input {
   margin: 5px 10px;
   padding: 10px 10px;
+}
+
+#read,
+#not-read {
+  height: 20px;
+  width: 20px;
 }
 
 form > #submit-button {
@@ -49,8 +65,8 @@ th {
 }
 
 button {
-  font-size: 16px;
-  font-family: Tahoma, Geneva, sans-serif;
+  font-size: 20px;
+  font-weight: 520;
 }
 
 .button-delete {
