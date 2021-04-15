@@ -1,5 +1,4 @@
 "use strict";
-
 class Book {
   constructor(title, author, pages, readStatus) {
     this.title = title;
@@ -11,6 +10,15 @@ class Book {
     };
   }
 }
+
+const bookTable = document.getElementById("book-table");
+const submitButton = document.getElementById("submit-button");
+submitButton.addEventListener("click", submitNewBook);
+
+const firstBook = new Book("The Hobbit", "J.R.R. Tolkien", 295, "READ");
+let myLibrary = [];
+addBookToLibrary(firstBook);
+addBookToDisplay(firstBook);
 
 function submitNewBook() {
   const title = document.getElementById("title").value;
@@ -97,18 +105,31 @@ function testFunc(test) {
   console.log("testfunc", test);
 }
 
-const bookTable = document.getElementById("book-table");
-const firstBook = new Book("The Hobbit", "J.R.R. Tolkien", 295, "READ");
-let myLibrary = [];
+if(!localStorage.getItem('myLibrary')) {
+  populateStorage();
+} else {
+  setDataItems();
+}
 
-const submitButton = document.getElementById("submit-button");
-submitButton.addEventListener("click", submitNewBook);
+function populateStorage() {
+  localStorage.setItem("myLibrary", JSON.stringify(myLibrary));
+  localStorage.setItem("pageContent", document.documentElement.innerHTML);
 
-addBookToLibrary(firstBook);
-addBookToDisplay(firstBook);
+  setDataItems();
+}
+
+function setDataItems() {
+  let currentLibraryJSON = localStorage.getItem("myLibrary");
+  let currentPageContent = localStorage.getItem("pageContent");
+
+  myLibrary = JSON.parse(currentLibraryJSON);
+  document.documentElement.innerHTML = currentPageContent;
+}
+
+bookTable.onchange = populateStorage;
 
 /* To-do list
 - Throw confirmation for delete function
 - Require user to fill in blank text field
-- Store myLibrary and display in localStorage?
+- Debug localStorage functions *maybe .onchange????*
  */
