@@ -12,6 +12,19 @@ class Book {
   }
 }
 
+function submitNewBook() {
+  const title = document.getElementById("title").value;
+  const author = document.getElementById("author").value;
+  const pages = document.getElementById("pages").value;
+  let readStatus;
+  if (document.getElementById("read").checked) readStatus = "READ";
+  else readStatus = "NOT READ";
+
+  const newBook = new Book(title, author, pages, readStatus);
+  addBookToLibrary(newBook);
+  addBookToDisplay(newBook);
+}
+
 function addBookToLibrary(book) {
   myLibrary.push(book);
 }
@@ -23,7 +36,7 @@ function addBookToDisplay(book) {
   bookInfoArray.forEach((info) => {
     const newTableData = document.createElement("td");
     if (info == "READ" || info == "NOT READ") {
-      newTableData.appendChild(getReadStatusButton(info));
+      newTableData.appendChild(getReadStatusButton(info, book.title));
     } else {
       newTableData.textContent = info;
     }
@@ -44,36 +57,44 @@ function getDeleteButtonCell(title) {
   return tdElement;
 }
 
-function getReadStatusButton(info) {
+function getReadStatusButton(readStatusInfo, title) {
   const button = document.createElement("button");
-  button.textContent = info;
-  // Add event listener
+  button.textContent = readStatusInfo;
+  button.id = "read-status-" + title;
+  button.addEventListener("click", changeReadStatus);
   return button;
-}
-
-function submitNewBook() {
-  const title = document.getElementById("title").value;
-  const author = document.getElementById("author").value;
-  const pages = document.getElementById("pages").value;
-  let readStatus;
-  if (document.getElementById("read").checked) readStatus = "READ";
-  else readStatus = "NOT READ";
-
-  const newBook = new Book(title, author, pages, readStatus);
-  addBookToLibrary(newBook);
-  addBookToDisplay(newBook);
 }
 
 function deleteBook(e) {
   const title = e.target.id.slice(7);
   const updatedLibrary = myLibrary.filter((book) => book.title != title);
   myLibrary = updatedLibrary;
+
   const bookTableRow = document.getElementById(title);
   bookTableRow.remove();
 }
 
-function testFunc() {
-  console.log("Hi");
+function changeReadStatus(e) {
+  const title = e.target.id.slice(12);
+  const currentReadStatus = e.target.innerText;
+  const readStatusButton = document.getElementById(e.target.id);
+  const updatedLibrary = myLibrary.map((book) => {
+    if (book.title == title) {
+      if (currentReadStatus == "READ") {
+        book.readStatus = "NOT READ";
+        readStatusButton.textContent = "NOT READ";
+      } else {
+        book.readStatus = "READ";
+        readStatusButton.textContent = "READ";
+      }
+      return book;
+    }
+  });
+  myLibrary = updatedLibrary;
+}
+
+function testFunc(test) {
+  console.log("testfunc", test);
 }
 
 const bookTable = document.getElementById("book-table");
@@ -83,10 +104,11 @@ let myLibrary = [];
 const submitButton = document.getElementById("submit-button");
 submitButton.addEventListener("click", submitNewBook);
 
+addBookToLibrary(firstBook);
 addBookToDisplay(firstBook);
 
 /* To-do list
 - Throw confirmation for delete function
 - Require user to fill in blank text field
-- Read -> Not Read button for entries
+- Store myLibrary and display in localStorage?
  */
