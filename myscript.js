@@ -14,6 +14,7 @@ class Book {
 const bookTable = document.getElementById("book-table");
 const submitButton = document.getElementById("submit-button");
 submitButton.addEventListener("click", submitNewBook);
+submitButton.addEventListener("click", populateStorage);
 
 const firstBook = new Book("The Hobbit", "J.R.R. Tolkien", 295, "READ");
 let myLibrary = [];
@@ -95,8 +96,8 @@ function changeReadStatus(e) {
         book.readStatus = "READ";
         readStatusButton.textContent = "READ";
       }
-      return book;
     }
+    return book;
   });
   myLibrary = updatedLibrary;
 }
@@ -125,8 +126,6 @@ function setDataItems() {
   myLibrary = JSON.parse(currentLibraryJSON);
   document.documentElement.innerHTML = currentPageContent;
 }
-
-bookTable.onchange = populateStorage;
 
 /* To-do list
 - Throw confirmation for delete function
