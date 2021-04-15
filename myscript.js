@@ -85,4 +85,8 @@ addBookToDisplay(firstBook);
 
 /* To-do list
 - Throw confirmation for delete function
+- Require user to fill in blank text field
+- Read -> Not Read button for entries
+- Calibri text font instead
+- increase opacity
  */
