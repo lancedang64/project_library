@@ -23,6 +23,10 @@ function submitNewBook() {
   const newBook = new Book(title, author, pages, readStatus);
   addBookToLibrary(newBook);
   addBookToDisplay(newBook);
+
+  updateLocalStorage();
+
+  submitForm.reset();
 }
 
 function addBookToLibrary(book) {
@@ -34,9 +38,9 @@ function addBookToDisplay(book) {
   newTableRow.id = book.title;
   bookTable.appendChild(newTableRow);
 
-  newTableRow.innerHTML += '<td>' + book.title + '</td>';
-  newTableRow.innerHTML += '<td>' + book.author + '</td>';
-  newTableRow.innerHTML += '<td>' + book.pages + '</td>';
+  newTableRow.innerHTML += "<td>" + book.title + "</td>";
+  newTableRow.innerHTML += "<td>" + book.author + "</td>";
+  newTableRow.innerHTML += "<td>" + book.pages + "</td>";
   newTableRow.appendChild(getReadStatusTD(book));
   newTableRow.appendChild(getDeleteTD(book));
 }
@@ -47,7 +51,7 @@ function getDeleteTD(book) {
   deleteButton.id = "delete-" + book.title;
   deleteButton.className = "delete";
   deleteButton.textContent = "DELETE";
-  //deleteButton.addEventListener("click", deleteBook);
+  deleteButton.addEventListener("click", deleteBook);
   tdElement.appendChild(deleteButton);
   return tdElement;
 }
@@ -58,7 +62,7 @@ function getReadStatusTD(book) {
   readStatusButton.textContent = book.readStatus;
   readStatusButton.id = "read-status-" + book.title;
   readStatusButton.className = "read-status";
-  //readStatusButton.addEventListener("click", changeReadStatus);
+  readStatusButton.addEventListener("click", changeReadStatus);
   readStatusTD.appendChild(readStatusButton);
   return readStatusTD;
 }
@@ -70,8 +74,11 @@ function deleteBook(e) {
 
   const bookTableRow = document.getElementById(title);
   bookTableRow.remove();
+
+  updateLocalStorage();
 }
 
+// change the read status in both the dislays and arrays
 function changeReadStatus(e) {
   const title = e.target.id.slice(12);
   const currentReadStatus = e.target.innerText;
@@ -89,6 +96,13 @@ function changeReadStatus(e) {
     return book;
   });
   myLibrary = updatedLibrary;
+
+  updateLocalStorage();
+}
+
+function updateLocalStorage() {
+  localStorage.setItem("bookTable", bookTable.innerHTML);
+  localStorage.setItem("myLibrary", JSON.stringify(myLibrary));
 }
 
 function testFunc(test) {
@@ -96,6 +110,7 @@ function testFunc(test) {
 }
 
 const bookTable = document.getElementById("book-table");
+const submitForm = document.getElementById('submit-form');
 
 let myLibrary = [];
 
@@ -103,14 +118,23 @@ const exampleBook = new Book("The Hobbit", "J.R.R. Tolkien", 295, "READ");
 addBookToLibrary(exampleBook);
 addBookToDisplay(exampleBook);
 
+let savedBookTable = localStorage.getItem("bookTable");
+let savedLibrary = localStorage.getItem("myLibrary");
+if (savedBookTable) {
+  bookTable.innerHTML = savedBookTable;
+  myLibrary = JSON.parse(savedLibrary);
+}
+
 const submitButton = document.getElementById("submit-button");
 submitButton.addEventListener("click", submitNewBook);
 
 const readStatusButtons = document.querySelectorAll("button.read-status");
-readStatusButtons.forEach(button => button.addEventListener("click", changeReadStatus));
+readStatusButtons.forEach((button) =>
+  button.addEventListener("click", changeReadStatus)
+);
 
 const deleteButons = document.querySelectorAll("button.delete");
-deleteButons.forEach(button => button.addEventListener("click", deleteBook));
+deleteButons.forEach((button) => button.addEventListener("click", deleteBook));
 
 /* To-do list
 - Throw confirmation for delete function
