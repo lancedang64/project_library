@@ -13,20 +13,20 @@ class Book {
 }
 
 function submitNewBook() {
+  const newBook = getBookFromInput();
+  addBookToLibrary(newBook);
+  addBookToDisplay(newBook);
+  updateLocalStorage();
+  submitForm.reset();
+}
+
+function getBookFromInput() {
   const title = document.getElementById("title").value;
   const author = document.getElementById("author").value;
   const pages = document.getElementById("pages").value;
-  let readStatus;
-  if (document.getElementById("read").checked) readStatus = "READ";
-  else readStatus = "NOT READ";
-
+  const readStatus = document.getElementById("read").checked? "READ" : "NOT READ";
   const newBook = new Book(title, author, pages, readStatus);
-  addBookToLibrary(newBook);
-  addBookToDisplay(newBook);
-
-  updateLocalStorage();
-
-  submitForm.reset();
+  return newBook;
 }
 
 function addBookToLibrary(book) {
