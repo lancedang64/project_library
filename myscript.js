@@ -33,39 +33,37 @@ function addBookToDisplay(book) {
   const newTableRow = document.createElement("tr");
   newTableRow.id = book.title;
   bookTable.appendChild(newTableRow);
-  const bookInfoArray = book.getBookInfo();
-  bookInfoArray.forEach((info) => {
-    const newTableData = document.createElement("td");
-    if (info == "READ" || info == "NOT READ") {
-      newTableData.appendChild(getReadStatusButton(info, book.title));
-    } else {
-      newTableData.textContent = info;
-    }
-    newTableRow.appendChild(newTableData);
-  });
-  newTableRow.appendChild(getDeleteButtonCell(book.title));
+
+  newTableRow.innerHTML += '<td>' + book.title + '</td>';
+  newTableRow.innerHTML += '<td>' + book.author + '</td>';
+  newTableRow.innerHTML += '<td>' + book.pages + '</td>';
+  newTableRow.appendChild(getReadStatusTD(book));
+  newTableRow.appendChild(getDeleteTD(book));
 }
 
-function getDeleteButtonCell(title) {
+function getDeleteTD(book) {
   const tdElement = document.createElement("td");
-  const button = document.createElement("button");
-  button.id = "delete-" + title;
-  button.className = "button-delete";
-  button.textContent = "DELETE";
-  button.onclick = deleteBook(title);
-  tdElement.appendChild(button);
+  const deleteButton = document.createElement("button");
+  deleteButton.id = "delete-" + book.title;
+  deleteButton.className = "button-delete";
+  deleteButton.textContent = "DELETE";
+  deleteButton.addEventListener("click", deleteBook);
+  tdElement.appendChild(deleteButton);
   return tdElement;
 }
 
-function getReadStatusButton(readStatusInfo, title) {
-  const button = document.createElement("button");
-  button.textContent = readStatusInfo;
-  button.id = "read-status-" + title;
-  button.addEventListener("click", changeReadStatus);
-  return button;
+function getReadStatusTD(book) {
+  const readStatusTD = document.createElement("td");
+  const readStatusButton = document.createElement("button");
+  readStatusButton.textContent = book.readStatus;
+  readStatusButton.id = "read-status-" + book.title;
+  readStatusButton.addEventListener("click", changeReadStatus);
+  readStatusTD.appendChild(readStatusButton);
+  return readStatusTD;
 }
 
-function deleteBook(title) {
+function deleteBook(e) {
+  const title = e.target.id.slice(7);
   const updatedLibrary = myLibrary.filter((book) => book.title != title);
   myLibrary = updatedLibrary;
 
@@ -104,7 +102,7 @@ let myLibrary = [];
 
 const firstBook = new Book("The Hobbit", "J.R.R. Tolkien", 295, "READ");
 addBookToLibrary(firstBook);
-//addBookToDisplay(firstBook);
+addBookToDisplay(firstBook);
 
 /* To-do list
 - Throw confirmation for delete function
