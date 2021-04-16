@@ -45,9 +45,9 @@ function getDeleteTD(book) {
   const tdElement = document.createElement("td");
   const deleteButton = document.createElement("button");
   deleteButton.id = "delete-" + book.title;
-  deleteButton.className = "button-delete";
+  deleteButton.className = "delete";
   deleteButton.textContent = "DELETE";
-  deleteButton.addEventListener("click", deleteBook);
+  //deleteButton.addEventListener("click", deleteBook);
   tdElement.appendChild(deleteButton);
   return tdElement;
 }
@@ -57,7 +57,8 @@ function getReadStatusTD(book) {
   const readStatusButton = document.createElement("button");
   readStatusButton.textContent = book.readStatus;
   readStatusButton.id = "read-status-" + book.title;
-  readStatusButton.addEventListener("click", changeReadStatus);
+  readStatusButton.className = "read-status";
+  //readStatusButton.addEventListener("click", changeReadStatus);
   readStatusTD.appendChild(readStatusButton);
   return readStatusTD;
 }
@@ -95,14 +96,21 @@ function testFunc(test) {
 }
 
 const bookTable = document.getElementById("book-table");
-const submitButton = document.getElementById("submit-button");
-submitButton.addEventListener("click", submitNewBook);
 
 let myLibrary = [];
 
-const firstBook = new Book("The Hobbit", "J.R.R. Tolkien", 295, "READ");
-addBookToLibrary(firstBook);
-addBookToDisplay(firstBook);
+const exampleBook = new Book("The Hobbit", "J.R.R. Tolkien", 295, "READ");
+addBookToLibrary(exampleBook);
+addBookToDisplay(exampleBook);
+
+const submitButton = document.getElementById("submit-button");
+submitButton.addEventListener("click", submitNewBook);
+
+const readStatusButtons = document.querySelectorAll("button.read-status");
+readStatusButtons.forEach(button => button.addEventListener("click", changeReadStatus));
+
+const deleteButons = document.querySelectorAll("button.delete");
+deleteButons.forEach(button => button.addEventListener("click", deleteBook));
 
 /* To-do list
 - Throw confirmation for delete function
