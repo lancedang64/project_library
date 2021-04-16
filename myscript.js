@@ -1,4 +1,5 @@
 "use strict";
+
 class Book {
   constructor(title, author, pages, readStatus) {
     this.title = title;
@@ -10,16 +11,20 @@ class Book {
     };
   }
 }
-
 const bookTable = document.getElementById("book-table");
 const submitButton = document.getElementById("submit-button");
-submitButton.addEventListener("click", submitNewBook);
-submitButton.addEventListener("click", populateStorage);
-
 const firstBook = new Book("The Hobbit", "J.R.R. Tolkien", 295, "READ");
+let saved = localStorage.getItem('bookTable');
 let myLibrary = [];
+
 addBookToLibrary(firstBook);
 addBookToDisplay(firstBook);
+
+submitButton.addEventListener("click", submitNewBook);
+
+// if (saved) {
+//   bookTable.innerHTML = saved;
+// }
 
 function submitNewBook() {
   const title = document.getElementById("title").value;
@@ -32,6 +37,8 @@ function submitNewBook() {
   const newBook = new Book(title, author, pages, readStatus);
   addBookToLibrary(newBook);
   addBookToDisplay(newBook);
+
+  //localStorage.setItem('bookTable', bookTable.innerHTML);
 }
 
 function addBookToLibrary(book) {
@@ -41,6 +48,7 @@ function addBookToLibrary(book) {
 function addBookToDisplay(book) {
   const newTableRow = document.createElement("tr");
   newTableRow.id = book.title;
+  bookTable.appendChild(newTableRow);
   const bookInfoArray = book.getBookInfo();
   bookInfoArray.forEach((info) => {
     const newTableData = document.createElement("td");
@@ -52,7 +60,6 @@ function addBookToDisplay(book) {
     newTableRow.appendChild(newTableData);
   });
   newTableRow.appendChild(getDeleteButtonCell(book.title));
-  bookTable.appendChild(newTableRow);
 }
 
 function getDeleteButtonCell(title) {
@@ -61,7 +68,7 @@ function getDeleteButtonCell(title) {
   button.id = "delete-" + title;
   button.className = "button-delete";
   button.textContent = "DELETE";
-  button.addEventListener("click", deleteBook);
+  button.onclick = deleteBook(title);
   tdElement.appendChild(button);
   return tdElement;
 }
@@ -74,8 +81,7 @@ function getReadStatusButton(readStatusInfo, title) {
   return button;
 }
 
-function deleteBook(e) {
-  const title = e.target.id.slice(7);
+function deleteBook(title) {
   const updatedLibrary = myLibrary.filter((book) => book.title != title);
   myLibrary = updatedLibrary;
 
@@ -106,11 +112,11 @@ function testFunc(test) {
   console.log("testfunc", test);
 }
 
-if(!localStorage.getItem('myLibrary')) {
-  populateStorage();
-} else {
-  setDataItems();
-}
+// if(!localStorage.getItem('myLibrary')) {
+//   populateStorage();
+// } else {
+//   setDataItems();
+// }
 
 function populateStorage() {
   localStorage.setItem("myLibrary", JSON.stringify(myLibrary));
