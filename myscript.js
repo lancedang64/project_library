@@ -11,20 +11,6 @@ class Book {
     };
   }
 }
-const bookTable = document.getElementById("book-table");
-const submitButton = document.getElementById("submit-button");
-const firstBook = new Book("The Hobbit", "J.R.R. Tolkien", 295, "READ");
-let saved = localStorage.getItem('bookTable');
-let myLibrary = [];
-
-addBookToLibrary(firstBook);
-addBookToDisplay(firstBook);
-
-submitButton.addEventListener("click", submitNewBook);
-
-// if (saved) {
-//   bookTable.innerHTML = saved;
-// }
 
 function submitNewBook() {
   const title = document.getElementById("title").value;
@@ -37,8 +23,6 @@ function submitNewBook() {
   const newBook = new Book(title, author, pages, readStatus);
   addBookToLibrary(newBook);
   addBookToDisplay(newBook);
-
-  //localStorage.setItem('bookTable', bookTable.innerHTML);
 }
 
 function addBookToLibrary(book) {
@@ -112,26 +96,15 @@ function testFunc(test) {
   console.log("testfunc", test);
 }
 
-// if(!localStorage.getItem('myLibrary')) {
-//   populateStorage();
-// } else {
-//   setDataItems();
-// }
+const bookTable = document.getElementById("book-table");
+const submitButton = document.getElementById("submit-button");
+submitButton.addEventListener("click", submitNewBook);
 
-function populateStorage() {
-  localStorage.setItem("myLibrary", JSON.stringify(myLibrary));
-  localStorage.setItem("pageContent", document.documentElement.innerHTML);
+let myLibrary = [];
 
-  setDataItems();
-}
-
-function setDataItems() {
-  let currentLibraryJSON = localStorage.getItem("myLibrary");
-  let currentPageContent = localStorage.getItem("pageContent");
-
-  myLibrary = JSON.parse(currentLibraryJSON);
-  document.documentElement.innerHTML = currentPageContent;
-}
+const firstBook = new Book("The Hobbit", "J.R.R. Tolkien", 295, "READ");
+addBookToLibrary(firstBook);
+//addBookToDisplay(firstBook);
 
 /* To-do list
 - Throw confirmation for delete function
