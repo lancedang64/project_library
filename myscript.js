@@ -13,20 +13,36 @@ class Book {
 }
 
 function submitNewBook() {
-  const newBook = getBookFromInput();
-  addBookToLibrary(newBook);
-  addBookToDisplay(newBook);
-  updateLocalStorage();
-  submitForm.reset();
-}
-
-function getBookFromInput() {
   const title = document.getElementById("title").value;
   const author = document.getElementById("author").value;
   const pages = document.getElementById("pages").value;
   const readStatus = document.getElementById("read").checked? "READ" : "NOT READ";
+  let isFormFilled = title.trim() !== '' && author.trim() !== '' && pages > 0;
+
+  if (isFormFilled) {
   const newBook = new Book(title, author, pages, readStatus);
-  return newBook;
+  addBookToLibrary(newBook);
+  addBookToDisplay(newBook);
+  updateLocalStorage();
+  submitForm.reset();
+  remindUserInput(title, author, pages);
+  } else {
+    remindUserInput(title, author, pages);
+    return;
+  }
+}
+
+function remindUserInput(title, author, pages) {
+  const titleReminder = document.getElementById('title-reminder');
+  const authorReminder = document.getElementById('author-reminder');
+  const pagesReminder = document.getElementById('pages-reminder');
+  const reminder = "*please fill in this field";
+  if (title.trim() === '') titleReminder.textContent = reminder;
+  else titleReminder.textContent = '';
+  if (author.trim() === '') authorReminder.textContent = reminder;
+  else authorReminder.textContent = '';
+  if (pages <= 0) pagesReminder.textContent = reminder;
+  else pagesReminder.textContent = '';
 }
 
 function addBookToLibrary(book) {
@@ -138,6 +154,4 @@ deleteButons.forEach((button) => button.addEventListener("click", deleteBook));
 
 /* To-do list
 - Throw confirmation for delete function
-- Require user to fill in blank text field
-- Debug localStorage functions *maybe .onchange????*
  */
