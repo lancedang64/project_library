@@ -20,5 +20,5 @@ Changes are updated with that book object in myLibrary[].
   - Styling rules
   
 - HTML
-  - <form> and related tags
-  - <table> and related tags
+  - form and related tags
+  - table and related tags
