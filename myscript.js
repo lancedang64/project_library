@@ -153,5 +153,4 @@ const deleteButons = document.querySelectorAll("button.delete");
 deleteButons.forEach((button) => button.addEventListener("click", deleteBook));
 
 /* To-do list
-- Throw confirmation for delete function
  */
