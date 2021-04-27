@@ -12,6 +12,105 @@ class Book {
   }
 }
 
+class Library {
+  constructor(library) {
+    this.library = library;
+  }
+
+  submitNewBook = () => {
+    if (!this.getBookFromInput()) return;
+    const book = this.getBookFromInput();
+    this.addBookToLibrary(book);
+    this.addBookToDisplay(book);
+  };
+
+  getBookFromInput = () => {
+    const title = document.getElementById('title').value;
+    const author = document.getElementById('author').value;
+    const pages = document.getElementById('pages').value;
+    const readStatus = document.getElementById('read').checked
+      ? 'READ'
+      : 'NOT READ';
+
+    const isFormFilled =
+      title.trim() !== '' && author.trim() !== '' && pages > 0;
+    if (!isFormFilled) {
+      remindUserInput(title, author, pages);
+      return;
+    } else {
+      const book = new Book(title, author, pages, readStatus);
+      return book;
+    }
+  };
+
+  addBookToLibrary = (book) => {
+    this.library.push(book);
+  };
+
+  addBookToDisplay = (book) => {
+    const newTableRow = document.createElement('tr');
+    newTableRow.id = book.title;
+    bookTable.appendChild(newTableRow);
+
+    newTableRow.innerHTML += '<td>' + book.title + '</td>';
+    newTableRow.innerHTML += '<td>' + book.author + '</td>';
+    newTableRow.innerHTML += '<td>' + book.pages + '</td>';
+    newTableRow.appendChild(this.getReadStatusTD(book));
+    newTableRow.appendChild(this.getDeleteTD(book));
+  };
+
+  getDeleteTD = (book) => {
+    const tdElement = document.createElement('td');
+    const deleteButton = document.createElement('button');
+    deleteButton.id = 'delete-' + book.title;
+    deleteButton.className = 'delete';
+    deleteButton.textContent = 'DELETE';
+    deleteButton.addEventListener('click', this.deleteBook);
+    tdElement.appendChild(deleteButton);
+    return tdElement;
+  };
+
+  getReadStatusTD = (book) => {
+    const readStatusTD = document.createElement('td');
+    const readStatusButton = document.createElement('button');
+    readStatusButton.textContent = book.readStatus;
+    readStatusButton.id = 'read-status-' + book.title;
+    readStatusButton.className = 'read-status';
+    readStatusButton.addEventListener('click', this.changeReadStatus);
+    readStatusTD.appendChild(readStatusButton);
+    return readStatusTD;
+  };
+
+  deleteBook = (e) => {
+    const title = e.target.id.slice(7);
+    this.library = this.library.filter((book) => book.title != title);
+    document.getElementById(title).remove();
+    updateLocalStorage();
+  };
+
+  changeReadStatus = (e) => {
+    const title = e.target.id.slice(12);
+    const currentReadStatus = e.target.innerText;
+    const readStatusButton = document.getElementById(e.target.id);
+    const foundBook = this.library.find((book) => book.title === title);
+    const updatedLibrary = this.library.map((book) => {
+      if (book.title == title) {
+        if (currentReadStatus == 'READ') {
+          book.readStatus = 'NOT READ';
+          readStatusButton.textContent = 'NOT READ';
+        } else {
+          book.readStatus = 'READ';
+          readStatusButton.textContent = 'READ';
+        }
+      }
+      return book;
+    });
+    myLibrary = updatedLibrary;
+
+    updateLocalStorage();
+  };
+}
+
 function submitNewBook() {
   const title = document.getElementById('title').value;
   const author = document.getElementById('author').value;
@@ -100,20 +199,12 @@ function deleteBook(e) {
 function changeReadStatus(e) {
   const title = e.target.id.slice(12);
   const currentReadStatus = e.target.innerText;
+  const changedReadStatus = currentReadStatus === 'READ'? 'NOT READ' : 'READ';
   const readStatusButton = document.getElementById(e.target.id);
-  const updatedLibrary = myLibrary.map((book) => {
-    if (book.title == title) {
-      if (currentReadStatus == 'READ') {
-        book.readStatus = 'NOT READ';
-        readStatusButton.textContent = 'NOT READ';
-      } else {
-        book.readStatus = 'READ';
-        readStatusButton.textContent = 'READ';
-      }
-    }
-    return book;
-  });
-  myLibrary = updatedLibrary;
+  const bookIndex = myLibrary.findIndex((book) => book.title === title);
+  
+  myLibrary[bookIndex].readStatus = changedReadStatus;
+  readStatusButton.textContent = changedReadStatus;
 
   updateLocalStorage();
 }
