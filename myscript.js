@@ -127,17 +127,13 @@ class localStorageController {
 
 const bookTable = document.getElementById('book-table');
 const submitForm = document.getElementById('submit-form');
-const exampleBook = new Book('The Hobbit', 'J.R.R. Tolkien', 295, 'READ');
 
 const myLibrary = new Library([]);
+const exampleBook = new Book('The Hobbit', 'J.R.R. Tolkien', 295, 'READ');
 myLibrary.addBookToLibrary(exampleBook);
 
-let savedBookTable = localStorage.getItem('bookTable');
-let savedLibrary = localStorage.getItem('myLibrary');
-if (savedBookTable) {
-  bookTable.innerHTML = savedBookTable;
-  myLibrary.library = JSON.parse(savedLibrary);
-}
+const myLocalStorageController = new localStorageController;
+myLocalStorageController.deploySavedState(bookTable, myLibrary);
 
 const submitButton = document.getElementById('submit-button');
 submitButton.addEventListener('click', myLibrary.submitNewBook);
