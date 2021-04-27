@@ -11,8 +11,8 @@ Changes are updated with that book object in myLibrary[].
 
 ## Knowledge and skills learnt and used
 - Javascript
-  - Object constructor
-  - Array
+  - Class
+  - Array methods
   - DOM manipulation
   - eventListener
 
