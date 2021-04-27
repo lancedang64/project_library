@@ -60,7 +60,6 @@ class Library {
     newTableRow.appendChild(this.getReadStatusTD(book));
     newTableRow.appendChild(this.getDeleteTD(book));
     bookTable.appendChild(newTableRow);
-
   };
 
   getDeleteTD = (book) => {
@@ -111,7 +110,7 @@ class Library {
   };
 }
 
-class localStorageController {
+class LocalStorageController {
   constructor() {
     this.bookTable = localStorage.getItem('bookTable');
     this.library = localStorage.getItem('myLibrary');
@@ -122,7 +121,25 @@ class localStorageController {
       bookTableElement.innerHTML = this.bookTable;
       libraryObject.library = JSON.parse(this.library);
     }
+  };
+}
+
+class DisplayController {
+  constructor() {
+    this.submitButton = document.getElementById('submit-button');
+    this.readStatusButtons = document.querySelectorAll('button.read-status');
+    this.deleteButons = document.querySelectorAll('button.delete');
   }
+
+  addEventListeners = (libraryObject) => {
+    this.submitButton.addEventListener('click', libraryObject.submitNewBook);
+    this.readStatusButtons.forEach((button) =>
+      button.addEventListener('click', libraryObject.changeReadStatus)
+    );
+    this.deleteButons.forEach((button) =>
+      button.addEventListener('click', libraryObject.deleteBook)
+    );
+  };
 }
 
 const bookTable = document.getElementById('book-table');
@@ -132,21 +149,11 @@ const myLibrary = new Library([]);
 const exampleBook = new Book('The Hobbit', 'J.R.R. Tolkien', 295, 'READ');
 myLibrary.addBookToLibrary(exampleBook);
 
-const myLocalStorageController = new localStorageController;
+const myLocalStorageController = new LocalStorageController;
 myLocalStorageController.deploySavedState(bookTable, myLibrary);
 
-const submitButton = document.getElementById('submit-button');
-submitButton.addEventListener('click', myLibrary.submitNewBook);
-
-const readStatusButtons = document.querySelectorAll('button.read-status');
-readStatusButtons.forEach((button) =>
-  button.addEventListener('click', myLibrary.changeReadStatus)
-);
-
-const deleteButons = document.querySelectorAll('button.delete');
-deleteButons.forEach((button) =>
-  button.addEventListener('click', myLibrary.deleteBook)
-);
+const myDisplayController = new DisplayController;
+myDisplayController.addEventListeners(myLibrary);
 
 /* To-do list
  */
