@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 class Book {
   constructor(title, author, pages, readStatus) {
@@ -13,19 +13,21 @@ class Book {
 }
 
 function submitNewBook() {
-  const title = document.getElementById("title").value;
-  const author = document.getElementById("author").value;
-  const pages = document.getElementById("pages").value;
-  const readStatus = document.getElementById("read").checked? "READ" : "NOT READ";
+  const title = document.getElementById('title').value;
+  const author = document.getElementById('author').value;
+  const pages = document.getElementById('pages').value;
+  const readStatus = document.getElementById('read').checked
+    ? 'READ'
+    : 'NOT READ';
   let isFormFilled = title.trim() !== '' && author.trim() !== '' && pages > 0;
 
   if (isFormFilled) {
-  const newBook = new Book(title, author, pages, readStatus);
-  addBookToLibrary(newBook);
-  addBookToDisplay(newBook);
-  updateLocalStorage();
-  submitForm.reset();
-  remindUserInput(title, author, pages);
+    const newBook = new Book(title, author, pages, readStatus);
+    addBookToLibrary(newBook);
+    addBookToDisplay(newBook);
+    updateLocalStorage();
+    submitForm.reset();
+    remindUserInput(title, author, pages);
   } else {
     remindUserInput(title, author, pages);
     return;
@@ -36,7 +38,7 @@ function remindUserInput(title, author, pages) {
   const titleReminder = document.getElementById('title-reminder');
   const authorReminder = document.getElementById('author-reminder');
   const pagesReminder = document.getElementById('pages-reminder');
-  const reminder = "*please fill in this field";
+  const reminder = '*please fill in this field';
   if (title.trim() === '') titleReminder.textContent = reminder;
   else titleReminder.textContent = '';
   if (author.trim() === '') authorReminder.textContent = reminder;
@@ -50,35 +52,35 @@ function addBookToLibrary(book) {
 }
 
 function addBookToDisplay(book) {
-  const newTableRow = document.createElement("tr");
+  const newTableRow = document.createElement('tr');
   newTableRow.id = book.title;
   bookTable.appendChild(newTableRow);
 
-  newTableRow.innerHTML += "<td>" + book.title + "</td>";
-  newTableRow.innerHTML += "<td>" + book.author + "</td>";
-  newTableRow.innerHTML += "<td>" + book.pages + "</td>";
+  newTableRow.innerHTML += '<td>' + book.title + '</td>';
+  newTableRow.innerHTML += '<td>' + book.author + '</td>';
+  newTableRow.innerHTML += '<td>' + book.pages + '</td>';
   newTableRow.appendChild(getReadStatusTD(book));
   newTableRow.appendChild(getDeleteTD(book));
 }
 
 function getDeleteTD(book) {
-  const tdElement = document.createElement("td");
-  const deleteButton = document.createElement("button");
-  deleteButton.id = "delete-" + book.title;
-  deleteButton.className = "delete";
-  deleteButton.textContent = "DELETE";
-  deleteButton.addEventListener("click", deleteBook);
+  const tdElement = document.createElement('td');
+  const deleteButton = document.createElement('button');
+  deleteButton.id = 'delete-' + book.title;
+  deleteButton.className = 'delete';
+  deleteButton.textContent = 'DELETE';
+  deleteButton.addEventListener('click', deleteBook);
   tdElement.appendChild(deleteButton);
   return tdElement;
 }
 
 function getReadStatusTD(book) {
-  const readStatusTD = document.createElement("td");
-  const readStatusButton = document.createElement("button");
+  const readStatusTD = document.createElement('td');
+  const readStatusButton = document.createElement('button');
   readStatusButton.textContent = book.readStatus;
-  readStatusButton.id = "read-status-" + book.title;
-  readStatusButton.className = "read-status";
-  readStatusButton.addEventListener("click", changeReadStatus);
+  readStatusButton.id = 'read-status-' + book.title;
+  readStatusButton.className = 'read-status';
+  readStatusButton.addEventListener('click', changeReadStatus);
   readStatusTD.appendChild(readStatusButton);
   return readStatusTD;
 }
@@ -101,12 +103,12 @@ function changeReadStatus(e) {
   const readStatusButton = document.getElementById(e.target.id);
   const updatedLibrary = myLibrary.map((book) => {
     if (book.title == title) {
-      if (currentReadStatus == "READ") {
-        book.readStatus = "NOT READ";
-        readStatusButton.textContent = "NOT READ";
+      if (currentReadStatus == 'READ') {
+        book.readStatus = 'NOT READ';
+        readStatusButton.textContent = 'NOT READ';
       } else {
-        book.readStatus = "READ";
-        readStatusButton.textContent = "READ";
+        book.readStatus = 'READ';
+        readStatusButton.textContent = 'READ';
       }
     }
     return book;
@@ -117,40 +119,40 @@ function changeReadStatus(e) {
 }
 
 function updateLocalStorage() {
-  localStorage.setItem("bookTable", bookTable.innerHTML);
-  localStorage.setItem("myLibrary", JSON.stringify(myLibrary));
+  localStorage.setItem('bookTable', bookTable.innerHTML);
+  localStorage.setItem('myLibrary', JSON.stringify(myLibrary));
 }
 
 function testFunc(test) {
-  console.log("testfunc", test);
+  console.log('testfunc', test);
 }
 
-const bookTable = document.getElementById("book-table");
+const bookTable = document.getElementById('book-table');
 const submitForm = document.getElementById('submit-form');
 
 let myLibrary = [];
 
-const exampleBook = new Book("The Hobbit", "J.R.R. Tolkien", 295, "READ");
+const exampleBook = new Book('The Hobbit', 'J.R.R. Tolkien', 295, 'READ');
 addBookToLibrary(exampleBook);
 addBookToDisplay(exampleBook);
 
-let savedBookTable = localStorage.getItem("bookTable");
-let savedLibrary = localStorage.getItem("myLibrary");
+let savedBookTable = localStorage.getItem('bookTable');
+let savedLibrary = localStorage.getItem('myLibrary');
 if (savedBookTable) {
   bookTable.innerHTML = savedBookTable;
   myLibrary = JSON.parse(savedLibrary);
 }
 
-const submitButton = document.getElementById("submit-button");
-submitButton.addEventListener("click", submitNewBook);
+const submitButton = document.getElementById('submit-button');
+submitButton.addEventListener('click', submitNewBook);
 
-const readStatusButtons = document.querySelectorAll("button.read-status");
+const readStatusButtons = document.querySelectorAll('button.read-status');
 readStatusButtons.forEach((button) =>
-  button.addEventListener("click", changeReadStatus)
+  button.addEventListener('click', changeReadStatus)
 );
 
-const deleteButons = document.querySelectorAll("button.delete");
-deleteButons.forEach((button) => button.addEventListener("click", deleteBook));
+const deleteButons = document.querySelectorAll('button.delete');
+deleteButons.forEach((button) => button.addEventListener('click', deleteBook));
 
 /* To-do list
  */
