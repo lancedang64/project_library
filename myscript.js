@@ -91,22 +91,13 @@ class Library {
   changeReadStatus = (e) => {
     const title = e.target.id.slice(12);
     const currentReadStatus = e.target.innerText;
+    const changedReadStatus = currentReadStatus === 'READ'? 'NOT READ' : 'READ';
     const readStatusButton = document.getElementById(e.target.id);
-    const foundBook = this.library.find((book) => book.title === title);
-    const updatedLibrary = this.library.map((book) => {
-      if (book.title == title) {
-        if (currentReadStatus == 'READ') {
-          book.readStatus = 'NOT READ';
-          readStatusButton.textContent = 'NOT READ';
-        } else {
-          book.readStatus = 'READ';
-          readStatusButton.textContent = 'READ';
-        }
-      }
-      return book;
-    });
-    myLibrary = updatedLibrary;
-
+    const bookIndex = this.library.findIndex((book) => book.title === title);
+    
+    this.library[bookIndex].readStatus = changedReadStatus;
+    readStatusButton.textContent = changedReadStatus;
+  
     updateLocalStorage();
   };
 }
@@ -186,12 +177,8 @@ function getReadStatusTD(book) {
 
 function deleteBook(e) {
   const title = e.target.id.slice(7);
-  const updatedLibrary = myLibrary.filter((book) => book.title != title);
-  myLibrary = updatedLibrary;
-
-  const bookTableRow = document.getElementById(title);
-  bookTableRow.remove();
-
+  myLibrary = myLibrary.filter((book) => book.title != title);
+  document.getElementById(title).remove();
   updateLocalStorage();
 }
 
