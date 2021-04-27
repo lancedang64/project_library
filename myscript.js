@@ -21,7 +21,6 @@ class Library {
     if (!this.getBookFromInput()) return;
     const book = this.getBookFromInput();
     this.addBookToLibrary(book);
-    this.addBookToDisplay(book);
     this.updateLocalStorage();
     submitForm.reset();
     this.remindUserInput(book);
@@ -52,18 +51,16 @@ class Library {
 
   addBookToLibrary = (book) => {
     this.library.push(book);
-  };
 
-  addBookToDisplay = (book) => {
     const newTableRow = document.createElement('tr');
     newTableRow.id = book.title;
-    bookTable.appendChild(newTableRow);
-
     newTableRow.innerHTML += '<td>' + book.title + '</td>';
     newTableRow.innerHTML += '<td>' + book.author + '</td>';
     newTableRow.innerHTML += '<td>' + book.pages + '</td>';
     newTableRow.appendChild(this.getReadStatusTD(book));
     newTableRow.appendChild(this.getDeleteTD(book));
+    bookTable.appendChild(newTableRow);
+
   };
 
   getDeleteTD = (book) => {
@@ -114,13 +111,26 @@ class Library {
   };
 }
 
+class localStorageController {
+  constructor() {
+    this.bookTable = localStorage.getItem('bookTable');
+    this.library = localStorage.getItem('myLibrary');
+  }
+
+  deploySavedState = (bookTableElement, libraryObject) => {
+    if (this.bookTable) {
+      bookTableElement.innerHTML = this.bookTable;
+      libraryObject.library = JSON.parse(this.library);
+    }
+  }
+}
+
 const bookTable = document.getElementById('book-table');
 const submitForm = document.getElementById('submit-form');
 const exampleBook = new Book('The Hobbit', 'J.R.R. Tolkien', 295, 'READ');
 
 const myLibrary = new Library([]);
 myLibrary.addBookToLibrary(exampleBook);
-myLibrary.addBookToDisplay(exampleBook);
 
 let savedBookTable = localStorage.getItem('bookTable');
 let savedLibrary = localStorage.getItem('myLibrary');
